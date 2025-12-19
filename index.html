@@ -3,230 +3,600 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PTPMNM - GitHub CI/CD Demo</title>
+    <title>📅 Lịch Thi & Portfolio - DH52200893</title>
     <style>
+        /* RESET & BASE */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f8961e;
         }
         
         body {
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark);
+            line-height: 1.6;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             padding: 20px;
         }
         
-        .container {
+        /* CONTAINER */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* HEADER */
+        .header {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s linear infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .exam-banner {
+            background: linear-gradient(90deg, #ff6b6b, #ff8e53);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.9; }
+        }
+        
+        .student-id {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin: 1rem 0;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #4cc9f0, #4361ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* MAIN CONTENT */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 3rem;
+        }
+        
+        .card {
             background: white;
             border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 800px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            text-align: center;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
         }
         
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 2.5em;
-        }
-        
-        .mssv-badge {
-            background: #4CAF50;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 1.8em;
-            font-weight: bold;
-            margin: 30px auto;
-            display: inline-block;
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
-        }
-        
-        .info-box {
-            background: #f8f9fa;
-            border-left: 5px solid #007bff;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: left;
-            border-radius: 10px;
-        }
-        
-        .step {
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
-            margin: 15px 0;
-            padding: 10px;
-            background: #e9ecef;
-            border-radius: 10px;
+            gap: 0.75rem;
         }
         
-        .step-number {
-            background: #007bff;
+        .card-title i {
+            color: var(--accent);
+        }
+        
+        /* EXAM SCHEDULE */
+        .exam-schedule {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+        
+        .exam-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 12px;
+            border-left: 5px solid var(--success);
+            transition: all 0.3s ease;
+        }
+        
+        .exam-item:hover {
+            border-left-color: var(--accent);
+            transform: translateX(5px);
+        }
+        
+        .exam-time {
+            background: var(--primary);
             color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            min-width: 120px;
+            text-align: center;
+            margin-right: 1rem;
+        }
+        
+        /* CI/CD STATUS */
+        .status-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        
+        .badge {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .badge-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        /* DEPLOYMENT TRACKER */
+        .deploy-tracker {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .deploy-tracker::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00dbde, #fc00ff);
+            animation: slide 2s linear infinite;
+        }
+        
+        @keyframes slide {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .deploy-step {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .deploy-step:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .step-icon {
             width: 40px;
             height: 40px;
+            background: var(--accent);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 15px;
+            margin-right: 1rem;
             font-weight: bold;
+            color: white;
         }
         
-        .status {
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        
-        .success {
-            background: #d4edda;
-            color: #155724;
-            border: 2px solid #c3e6cb;
-        }
-        
-        .loading {
-            background: #fff3cd;
-            color: #856404;
-            border: 2px solid #ffeaa7;
-        }
-        
-        .deploy-info {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px dashed #dee2e6;
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--dark);
+            color: white;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .tech-stack {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
             flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
         }
         
-        .tech-item {
-            background: #e9ecef;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            font-weight: 500;
+        .tech-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
         }
         
-        footer {
-            margin-top: 40px;
-            color: #6c757d;
-            font-size: 0.9em;
+        .tech-icon:hover {
+            background: var(--accent);
+            transform: scale(1.1) rotate(5deg);
         }
         
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
             }
             
-            h1 {
-                font-size: 1.8em;
+            .header {
+                padding: 1.5rem;
             }
             
-            .mssv-badge {
-                font-size: 1.4em;
-                padding: 12px 24px;
+            .student-id {
+                font-size: 2rem;
             }
+            
+            .exam-banner {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* UTILITIES */
+        .text-gradient {
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 10px var(--primary); }
+            to { box-shadow: 0 0 20px var(--accent); }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1>🚀 Bài Tập PTPMNM - GitHub CI/CD</h1>
-        <p class="subtitle">Deploy tự động với GitHub Actions + Vercel</p>
-        
-        <div class="mssv-badge" id="mssv">
-            MSSV: DH52201115
+    <div class="main-container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1><i class="fas fa-graduation-cap"></i> Portfolio Học Tập</h1>
+            <div class="student-id">DH52200893</div>
+            <p>Phát triển Phần mềm Mã nguồn Mở - Bài tập CI/CD</p>
         </div>
         
-        <div class="info-box">
-            <h3>📋 Thông tin project:</h3>
-            <p><strong>Môn học:</strong> Phát triển phần mềm mã nguồn mở</p>
-            <p><strong>Nội dung:</strong> Triển khai CI/CD với GitHub Actions</p>
-            <p><strong>Platform:</strong> Vercel (Frontend Cloud)</p>
+        <!-- EXAM BANNER -->
+        <div class="exam-banner">
+            🗓️ THI THỨ 5 - CA 4 🗓️ | Môn: PTPMNM | Giờ thi: 13:30 - 15:30
         </div>
         
-        <div class="info-box">
-            <h3>🔧 Quy trình CI/CD:</h3>
-            <div class="step">
-                <div class="step-number">1</div>
-                <div>Push code lên GitHub → Kích hoạt workflow</div>
+        <!-- MAIN CONTENT -->
+        <div class="content-grid">
+            <!-- CARD 1: THÔNG TIN CÁ NHÂN -->
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-user-circle"></i>
+                    Thông Tin Sinh Viên
+                </div>
+                <div class="info-item">
+                    <strong><i class="fas fa-id-card"></i> MSSV:</strong> DH52200893
+                </div>
+                <div class="info-item">
+                    <strong><i class="fas fa-book"></i> Môn học:</strong> PTPMNM
+                </div>
+                <div class="info-item">
+                    <strong><i class="fas fa-calendar-alt"></i> Năm học:</strong> 2023-2024
+                </div>
+                <div class="info-item">
+                    <strong><i class="fas fa-laptop-code"></i> Bài tập:</strong> GitHub CI/CD Pipeline
+                </div>
+                
+                <div class="status-badges">
+                    <span class="badge badge-success">
+                        <i class="fas fa-check-circle"></i> Đã hoàn thành
+                    </span>
+                    <span class="badge badge-info">
+                        <i class="fas fa-cloud-upload-alt"></i> Auto Deploy
+                    </span>
+                    <span class="badge badge-warning">
+                        <i class="fas fa-code-branch"></i> GitHub Actions
+                    </span>
+                </div>
             </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <div>GitHub Actions chạy test và build</div>
+            
+            <!-- CARD 2: LỊCH THI -->
+            <div class="card exam-schedule">
+                <div class="card-title">
+                    <i class="fas fa-calendar-check"></i>
+                    Lịch Thi Học Kỳ
+                </div>
+                
+                <div class="exam-item">
+                    <div class="exam-time">Thứ 5 - Ca 4</div>
+                    <div>
+                        <strong>PTPMNM</strong><br>
+                        <small>13:30 - 15:30 | Phòng D201</small>
+                    </div>
+                </div>
+                
+                <div class="exam-item">
+                    <div class="exam-time" style="background: #ff6b6b;">Thứ 6 - Ca 2</div>
+                    <div>
+                        <strong>Lập trình Web</strong><br>
+                        <small>08:00 - 10:00 | Phòng A102</small>
+                    </div>
+                </div>
+                
+                <div class="exam-item">
+                    <div class="exam-time" style="background: #4cc9f0;">Thứ 2 - Ca 3</div>
+                    <div>
+                        <strong>Cơ sở dữ liệu</strong><br>
+                        <small>10:30 - 12:30 | Phòng B305</small>
+                    </div>
+                </div>
             </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <div>Tự động deploy lên Vercel</div>
+            
+            <!-- CARD 3: CI/CD PIPELINE -->
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-rocket"></i>
+                    CI/CD Pipeline
+                </div>
+                
+                <div class="deploy-tracker">
+                    <h3 style="color: #fff; margin-bottom: 1.5rem;">
+                        <i class="fas fa-sync-alt"></i> Deployment Live Status
+                    </h3>
+                    
+                    <div class="deploy-step">
+                        <div class="step-icon">1</div>
+                        <div>
+                            <strong>Code Commit</strong><br>
+                            <small>git push origin main</small>
+                        </div>
+                    </div>
+                    
+                    <div class="deploy-step">
+                        <div class="step-icon">2</div>
+                        <div>
+                            <strong>GitHub Actions</strong><br>
+                            <small>Validate & Build</small>
+                        </div>
+                    </div>
+                    
+                    <div class="deploy-step">
+                        <div class="step-icon">3</div>
+                        <div>
+                            <strong>Vercel Deploy</strong><br>
+                            <small>Auto deploy to cloud</small>
+                        </div>
+                    </div>
+                    
+                    <div class="deploy-step">
+                        <div class="step-icon">4</div>
+                        <div>
+                            <strong>Live Website</strong><br>
+                            <small>https://[project].vercel.app</small>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="step">
-                <div class="step-number">4</div>
-                <div>Kiểm tra kết quả tại URL Vercel</div>
+            
+            <!-- CARD 4: KẾT QUẢ DEPLOY -->
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-chart-line"></i>
+                    Deployment Results
+                </div>
+                
+                <div id="deployResults">
+                    <div class="result-item">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        Đang kiểm tra trạng thái deploy...
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #eee;">
+                    <h4><i class="fas fa-link"></i> Deployment URLs:</h4>
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-top: 0.5rem;">
+                        <div><i class="fas fa-globe"></i> Production: <span id="prodUrl">loading...</span></div>
+                        <div style="margin-top: 0.5rem;"><i class="fas fa-code-branch"></i> Branch: <code>main</code></div>
+                    </div>
+                </div>
             </div>
         </div>
         
-        <div class="status loading" id="deployStatus">
-            🔄 Đang kiểm tra trạng thái deploy...
+        <!-- FOOTER -->
+        <div class="footer">
+            <div class="tech-stack">
+                <div class="tech-icon">
+                    <i class="fab fa-html5"></i>
+                </div>
+                <div class="tech-icon">
+                    <i class="fab fa-css3-alt"></i>
+                </div>
+                <div class="tech-icon">
+                    <i class="fab fa-js"></i>
+                </div>
+                <div class="tech-icon">
+                    <i class="fab fa-github"></i>
+                </div>
+                <div class="tech-icon">
+                    <i class="fab fa-vercel"></i>
+                </div>
+                <div class="tech-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+            </div>
+            
+            <p>© 2024 - Bài tập thực hành CI/CD - DH52200893</p>
+            <p style="opacity: 0.8; font-size: 0.9rem; margin-top: 0.5rem;">
+                <i class="fas fa-info-circle"></i> 
+                Tự động deploy khi push code lên GitHub repository
+            </p>
+            
+            <div style="margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.6;">
+                Last updated: <span id="timestamp"></span> | 
+                Commit: <span id="commitHash"></span>
+            </div>
         </div>
-        
-        <div class="deploy-info">
-            <h3>🌐 Thông tin deploy:</h3>
-            <p><strong>Commit Hash:</strong> <span id="commitHash">Loading...</span></p>
-            <p><strong>Thời gian deploy:</strong> <span id="deployTime">Loading...</span></p>
-            <p><strong>Build Status:</strong> <span id="buildStatus">Loading...</span></p>
-        </div>
-        
-        <div class="tech-stack">
-            <div class="tech-item">HTML5</div>
-            <div class="tech-item">CSS3</div>
-            <div class="tech-item">JavaScript</div>
-            <div class="tech-item">GitHub Actions</div>
-            <div class="tech-item">Vercel</div>
-            <div class="tech-item">CI/CD</div>
-        </div>
-        
-        <footer>
-            <p>© 2024 - Bài tập thực hành PTPMNM</p>
-            <p>Deploy tự động khi push code lên main branch</p>
-        </footer>
     </div>
 
     <script>
-        // Cập nhật thông tin deploy
         document.addEventListener('DOMContentLoaded', function() {
-            // Giả lập thông tin deploy
-            setTimeout(() => {
-                document.getElementById('deployStatus').className = 'status success';
-                document.getElementById('deployStatus').innerHTML = '✅ Đã deploy thành công lên Vercel!';
-                
-                document.getElementById('commitHash').textContent = 'a1b2c3d4';
-                document.getElementById('deployTime').textContent = new Date().toLocaleString('vi-VN');
-                document.getElementById('buildStatus').innerHTML = '<span style="color:green;">● PASSED</span>';
-            }, 1500);
+            // Cập nhật thông tin thời gian
+            const now = new Date();
+            document.getElementById('timestamp').textContent = 
+                now.toLocaleString('vi-VN', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
             
-            // Thêm hiệu ứng cho MSSV badge
-            const mssvBadge = document.getElementById('mssv');
-            mssvBadge.addEventListener('click', function() {
-                this.style.transform = 'scale(1.05)';
-                this.style.transition = 'transform 0.2s';
+            // Giả lập commit hash
+            document.getElementById('commitHash').textContent = 
+                'dh52' + Math.random().toString(36).substr(2, 6);
+            
+            // Giả lập deploy status
+            setTimeout(() => {
+                const resultsDiv = document.getElementById('deployResults');
+                resultsDiv.innerHTML = `
+                    <div style="background: #d4edda; color: #155724; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <i class="fas fa-check-circle"></i> <strong>Deployment Successful!</strong>
+                        <div style="font-size: 0.9rem; margin-top: 0.5rem;">
+                            ✅ MSSV validation passed<br>
+                            ✅ GitHub Actions completed<br>
+                            ✅ Vercel deployment successful
+                        </div>
+                    </div>
+                    <div style="background: #cce5ff; color: #004085; padding: 1rem; border-radius: 8px;">
+                        <i class="fas fa-clock"></i> <strong>Deployment Time:</strong> 1.8s
+                    </div>
+                `;
+                
+                // Giả lập production URL
+                document.getElementById('prodUrl').innerHTML = 
+                    `<a href="https://ptpmn-dh52200893.vercel.app" style="color: #4361ee; text-decoration: none;">
+                        https://ptpmn-dh52200893.vercel.app
+                    </a>`;
+            }, 2000);
+            
+            // Thêm hiệu ứng cho các exam item
+            const examItems = document.querySelectorAll('.exam-item');
+            examItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+            
+            // Thêm hiệu ứng loading cho deploy steps
+            const steps = document.querySelectorAll('.deploy-step');
+            let delay = 0;
+            steps.forEach(step => {
+                step.style.opacity = '0';
+                step.style.transform = 'translateX(-20px)';
+                
                 setTimeout(() => {
-                    this.style.transform = 'scale(1)';
-                }, 200);
+                    step.style.transition = 'all 0.5s ease';
+                    step.style.opacity = '1';
+                    step.style.transform = 'translateX(0)';
+                }, delay);
+                
+                delay += 300;
             });
         });
     </script>
